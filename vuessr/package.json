@@ -1,0 +1,20 @@
+{
+  "name": "vuessr",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:ssr": "vite-ssr",
+    "build": "rm -rf dist && vite-ssr build",
+    "serve": "vite preview",
+    "refresh": "rm -rf node_modules/vite-ssr && cp -r ../../src node_modules/vite-ssr && cp ../../src/cli.js node_modules/.bin/vite-ssr"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^1.1.5",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vueuse/head": "^0.5.1",
+    "vite": "^2.0.5",
+    "vite-ssr": "^0.5.0",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.4"
+  }
+}
