@@ -2,6 +2,8 @@
 
 ## 一些错误的解决
 
+注：此方法在更高级的 npm 版本无效，仅换代的前几个版本可以这么解决，建议使用 yarn 替代 npm 使得和官方开发 vite 使用的工具一致。
+
 在 npm v7 里 package-lock.json 升级了。
 可以看到 "lockfileVersion": 2 的设置。
 这样导致 esbuild.exe 不存在。

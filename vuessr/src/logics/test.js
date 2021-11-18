@@ -27,3 +27,20 @@ export async function getTests() {
     });
   });
 }
+
+export async function getTest(id) {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((e, conn) => {
+      if (e) reject(e);
+      else {
+        conn.query(`SELECT * FROM test WHERE id=${id}`, (e, r, f) => {
+          if (e) reject(e);
+          else {
+            conn.release();
+            resolve(r);
+          }
+        });
+      }
+    });
+  });
+}
