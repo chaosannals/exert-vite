@@ -14,7 +14,7 @@ import XLSX from "xlsx";
 const AZ_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const AZ_COUNT = AZ_CHARSET.length;
 
-// 10转26进制 A-Z
+// Excel 的特殊进制，不是26进制， 10进制转 Excel A-Z
 const toAZ = (n) => {
   let r = [];
   while (true) {
@@ -30,17 +30,43 @@ const toAZ = (n) => {
   return r.reverse().join("");
 };
 
+// 逆向 Excel A-Z 转 10进制
+const formAZ = (t) => {
+  let mi = t.length - 1;
+  let r = 0;
+  for (let j = 0; j < t.length; ++j) {
+    let i = mi - j;
+    let ci = AZ_CHARSET.indexOf(t[i]);
+    r += i == mi ? ci : Math.pow(AZ_COUNT, j) * (ci + 1);
+  }
+  return r;
+};
+
 //
 const toAZN = (x, y) => {
   let t = toAZ(x);
   return `${t}${y}`;
 };
+
+const formAZN = (t) => {
+  let m = t.match(/^([A-Z]+)([0-9]+)$/);
+  if (m) {
+    return {
+      row: m[2],
+      column: m[1],
+    };
+  }
+  return null;
+};
 onBeforeMount(() => {
   let r = [];
+  let rc = [];
   for (let i = 0; i < 1000; ++i) {
-    r.push(toAZ(i));
+    let c = toAZ(i);
+    r.push(c);
+    rc.push(formAZ(c));
   }
-  console.log(r);
+  console.log(r, rc);
 });
 
 const readFile = (file) => {
@@ -70,5 +96,6 @@ const onInput = async (e) => {
   let sheetName = workbook.SheetNames[0];
   let worksheet = workbook.Sheets[sheetName];
   console.log(worksheet);
+  console.log(worksheet["!ref"]);
 };
 </script>
