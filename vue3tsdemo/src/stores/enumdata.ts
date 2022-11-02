@@ -10,6 +10,13 @@ export const useEnumDataStore = defineStore('enumData', () => {
         '人傻钱多用户',
     ]);
 
+    const userLevels = ref([
+        '好骗',
+        '不好骗',
+        '他还会坑你',
+        '毁灭级',
+    ]);
+
     const userTypesWithId = computed(() => {
         return userTypes.value.map((ut, i) => {
             return {
@@ -19,13 +26,14 @@ export const useEnumDataStore = defineStore('enumData', () => {
         });
     });
 
-    function shuffle() {
+    function shuffleUserTypes() {
         userTypes.value = lodash.shuffle(userTypes.value);
     }
 
     return {
         userTypes,
         userTypesWithId,
-        shuffle,
+        userLevels,
+        shuffleUserTypes,
     };
 });

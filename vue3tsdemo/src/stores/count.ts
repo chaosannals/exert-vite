@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 
-// 配置文件式定义
+// 配置文件式（选项式）定义
 export const useCounterStore = defineStore('counter', {
     state: () => {
-        return { count: 0 }
+        return {
+            count: 0,
+        };
     },
     // 也可以这样定义
     // state: () => ({ count: 0 }),
