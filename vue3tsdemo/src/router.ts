@@ -20,8 +20,8 @@ export function createMyDemoRouter() {
         if (m) {
             const n = kebabCase(m!.at(1));
             routes.push({
-                path: `${n}`,
-                alias: `${n}.html`,
+                path: `/${n}`,
+                alias: `/${n}.html`,
                 component: pages[p],
             });
         }
