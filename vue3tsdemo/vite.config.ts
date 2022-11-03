@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv, ServerOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { viteMockServe } from 'vite-plugin-mock';
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -21,9 +22,13 @@ export default ({ mode }) => {
 
   return defineConfig({
     server: server,
-    
+
     plugins: [
       vue(),
+      viteMockServe({
+        mockPath: 'mock',
+        localEnabled: true,
+      }),
     ],
   });
 };

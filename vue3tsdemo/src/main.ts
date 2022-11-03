@@ -4,6 +4,7 @@ import './style.css';
 import App from './App.vue';
 import { createMyDemoRouter } from './router';
 import loader from './loader';
+import http from './http';
 import { piniaPluginDemo } from './plugins/ppdemo';
 
 const pinia = createPinia();
@@ -13,4 +14,5 @@ const router = createMyDemoRouter();
 app.use(pinia);
 app.use(router);
 app.use(loader);
+app.use(http);
 app.mount('#app');
