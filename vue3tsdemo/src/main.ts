@@ -8,7 +8,7 @@ import { piniaPluginDemo } from './plugins/ppdemo';
 
 const pinia = createPinia();
 pinia.use(piniaPluginDemo);
-const app = createApp(App)
+const app = createApp(App);
 const router = createMyDemoRouter();
 app.use(pinia);
 app.use(router);

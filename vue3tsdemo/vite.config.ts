@@ -21,6 +21,7 @@ export default ({ mode }) => {
 
   return defineConfig({
     server: server,
+    
     plugins: [
       vue(),
     ],

@@ -1,6 +1,6 @@
 <template>
     <div class="tip-group">
-        <div v-for="(t, i) in tipGroup" :key="i" class="tip-box">
+        <div v-for="(t, i) in tips" :key="i" class="tip-box">
             <span>{{ t.text }}</span>
         </div>
     </div>
@@ -13,7 +13,7 @@ const data = reactive({
     latestTipTime: null as number | null,
 });
 
-const tipGroup = ref([] as Array<{
+const tips = ref([] as Array<{
     text: string,
     timeEnd: number,
 }>);
@@ -25,14 +25,14 @@ const tick = () => {
     } else {
         data.latestTipTime = null;
     }
-    tipGroup.value = tipGroup.value.filter(i => {
+    tips.value = tips.value.filter(i => {
         return i.timeEnd > now;
     });
 }
 
 const addTip = (text: string, duration: number) => {
     const timeEnd = (new Date()).getTime() + duration * 1000;
-    tipGroup.value = [...tipGroup.value, {
+    tips.value = [...tips.value, {
         text: text,
         timeEnd: timeEnd,
     }];
@@ -65,7 +65,7 @@ defineExpose({
     color: white;
     font-size: 2.6667vw;
     border-radius: .6667vw;
-    background: #fa3979;
+    background: #4488dd22;
     margin: 0.667vw;
     padding: .6667vw;
 }
