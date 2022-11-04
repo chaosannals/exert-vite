@@ -8,6 +8,10 @@
 </template>
 
 <script lang="ts" setup>
+// Observable 数据提供源
+// Subscriber 用于触发订阅
+// Subject 同时保有了 Observable Subscriber 
+
 import { reactive } from 'vue';
 import {
     Observable,
@@ -22,9 +26,7 @@ import {
     throttleTime,
     debounceTime,
     mergeAll,
-    empty,
     Subject,
-    mapTo,
 } from 'rxjs';
 
 
@@ -43,7 +45,6 @@ const data = reactive({
 // from([1, 2, 3, 4, 5]) 直接提供一个数组的数据流出来，一次性产生数组个数的事件。
 // 这个感觉没什么用，只是用来测试的时候提供一个固定的数据流。。。
 
-// Observable 数据提供源
 //  interval 每隔 x 时间提供一次数据。
 interval(1000)
     .subscribe(x => {
@@ -88,18 +89,14 @@ const onClickWindowCount = () => {
 const windowToggleInterval = interval(1000).pipe(map(() => 1));
 const windowToggleOn = new Subject<void>();
 const windowToggleOff = new Subject<void>();
-windowToggleOn
-    .pipe(map(() => true))
-    .subscribe(i => {
-        data.windowToggle = i;
-        console.log('window toggle on', i);
-    });
-windowToggleOff
-    .pipe(map(() => false))
-    .subscribe(i => {
-        data.windowToggle = i;
-        console.log('window toggle off', i);
-    });
+merge(
+    windowToggleOn.pipe(map(() => true)),
+    windowToggleOff.pipe(map(() => false))
+).subscribe(i => {
+    data.windowToggle = i;
+    console.log('window toggle v:', i);
+});
+
 windowToggleInterval.pipe(
     // windowToggleOn 执行 next 就会触发，使得管道开通。与 windowToggleOn 返回值无关。
     // 由提供函数提供的 windowToggleOff next 被触发，就会使得管道关闭。与 windowToggleOff 返回值无关。
