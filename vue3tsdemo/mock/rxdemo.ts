@@ -10,6 +10,7 @@ export default [{
         return {
             link: Random.image('400x400', '#4488dd', '#FF', 'png', 'tttt'),
             data: Random.dataImage('400x400'),
+            paragraph: Random.paragraph(4),
         };
     },
 }, {
@@ -24,12 +25,19 @@ export default [{
             req.on('end', () => resolve(undefined))
         });
 
-        QRCode.toBuffer('tttt', {
+        console.log('reqbody:', reqbody);
+
+        QRCode.toBuffer(Random.word(4, 14), {
             version: 10,
             errorCorrectionLevel: 'H',
         }, (error, b) => {
             if (error) {
-
+                res.setHeader('Content-Type', 'application/json');
+                res.statusCode = 500;
+                res.end(JSON.stringify({
+                    msg: 'qrcode error',
+                    error: error.message,
+                }));
             } else {
                 res.setHeader('Content-Type', 'image/png');
                 res.statusCode = 200;
